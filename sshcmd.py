@@ -26,8 +26,8 @@ def ssh_command(ip, user, passwd, command):
 
 password = ""
 
-if os.path.exists('passwords.json'):
-    json_data = open('passwords.json')
+if os.path.exists('resources/passwords.json'):
+    json_data = open('resources/passwords.json')
     data = json.load(json_data)
     password = data["passwords"]["yiannisk"]
     json_data.close()

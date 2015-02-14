@@ -5,15 +5,14 @@ import subprocess
 import json
 
 
-def ssh_command(ip, user, passwd, command):
+def ssh_command(ip, port, user, passwd, command):
     client = paramiko.SSHClient()
 
     if os.path.exists("~/.ssh/known_hosts"):
         client.load_host_keys('~/.ssh/known_hosts')
 
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ip, username=user, password=passwd)
-
+    client.connect(ip, port=port, username=user, password=passwd)
     ssh_session = client.get_transport().open_session()
 
     if ssh_session.active:
@@ -38,11 +37,11 @@ def ssh_command(ip, user, passwd, command):
 
 password = ""
 
-if os.path.exists('passwords.json'):
-    json_data = open('passwords.json')
+if os.path.exists('resources/passwords.json'):
+    json_data = open('resources/passwords.json')
     data = json.load(json_data)
     password = data["passwords"]["yiannisk"]
     json_data.close()
 
 
-ssh_command("10.0.2.15", "yiannisk", password, "ClientConnected")
+ssh_command("127.0.0.1", 9999, "yiannisk", password, "ClientConnected")
